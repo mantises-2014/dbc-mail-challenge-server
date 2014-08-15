@@ -1,6 +1,7 @@
 get "/api/:email/messages" do
   if @api_token = ApiToken.find_by(token: params[:api_token])
-    if @api_token.throttle?
+    @api_token.record_request!
+    if @api_token.throttled?
       status 429
       return "Too many requests."
     end

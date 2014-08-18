@@ -15,6 +15,8 @@ gem 'rake'
 
 gem 'shotgun'
 
+gem 'thin'
+
 gem 'marky_markov'
 gem 'tweetstream'
 # gem 'uuid'

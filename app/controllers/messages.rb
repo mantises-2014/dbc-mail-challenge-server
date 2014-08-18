@@ -2,7 +2,7 @@ before "/api/:email/messages" do
   halt 403, "Invalid token" if api_token.nil?
   api_token.record_request!
 
-  halt 429, "Too many request" if api_token.throttled?
+  halt 429, "Too many requests" if api_token.throttled?
   halt 502, "Server error due to white whale impalement." if Random.rand(20) == 19
   halt 404, "Email address not found." if EmailAddress.find_by(email_address: params[:email]).nil?
 end

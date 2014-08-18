@@ -11,7 +11,7 @@ get "/api/:email/messages" do
     end
     if email_address = EmailAddress.find_by(email_address: params[:email])
       content_type :xml
-      email_address.messages.limit(50).to_xml
+      email_address.messages.order("id desc").limit(50).to_xml
     else
       status 404
       "Email address not found."

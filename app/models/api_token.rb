@@ -26,7 +26,7 @@ class ApiToken < ActiveRecord::Base
       self.request_count += 1
       save!
     else
-      update!(request_count: 0)
+      update!(request_count: 0, throttled_at: nil)
     end
   end
 

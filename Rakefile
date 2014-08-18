@@ -5,6 +5,19 @@ require ::File.expand_path('../config/environment', __FILE__)
 # Include all of ActiveSupport's core class extensions, e.g., String#camelize
 require 'active_support/core_ext'
 
+desc "Give some messages to each email address"
+task :give_messages do
+  unless ENV.has_key?('NUM')
+    raise "Must specificy number of messages eg. rake give_messages NUM=10"
+  end
+  EmailAddress.all.each do |email|
+    Message.unassigned.limit(ENV["NUM"].to_i).to_a.each do |m|
+      m.email_address = email
+      m.save!
+    end
+  end
+end
+
 namespace :generate do
 
   desc "Create some more messages"

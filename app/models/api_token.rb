@@ -4,7 +4,7 @@ class ApiToken < ActiveRecord::Base
   before_validation :generate_token, on: :create
 
   def generate_token
-    self.token = Random.rand.to_s
+    self.token = SecureRandom.hex
   end
 
   def throttled?

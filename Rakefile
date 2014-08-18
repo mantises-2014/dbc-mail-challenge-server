@@ -6,6 +6,22 @@ require ::File.expand_path('../config/environment', __FILE__)
 require 'active_support/core_ext'
 
 namespace :generate do
+
+  desc "Create some more messages"
+  task :messages do
+    unless ENV.has_key?('NUM')
+      raise "Must specificy number of messages eg. rake generate:messages NUM=100"
+    end
+    MobyDicktionary = MarkyMarkov::Dictionary.new("moby_dicktionary")
+    ENV["NUM"].to_i.times do
+      Message.create!(
+        from: "#{MobyDicktionary.generate_2_words.gsub(/\W/, "").downcase}@ahab.com",
+        subject: MobyDicktionary.generate_5_words,
+        body: MobyDicktionary.generate_5_sentences
+      )
+    end
+  end
+
   desc "Create an empty model in app/models, e.g., rake generate:model NAME=User"
   task :model do
     unless ENV.has_key?('NAME')

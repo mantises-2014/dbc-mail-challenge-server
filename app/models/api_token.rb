@@ -27,6 +27,7 @@ class ApiToken < ActiveRecord::Base
       save!
     else
       update!(request_count: 0, throttled_at: nil)
+      touch # ensure the updated_at value changes with touch
     end
   end
 

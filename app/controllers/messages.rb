@@ -2,7 +2,7 @@ before "/api/:email/messages*" do
   halt 403, "Invalid token" if api_token.nil?
 
   # /messages/count requests are exempt from rate limiting
-  if request.path_info.match(/count$/)
+  if !request.path_info.match(/count$/)
     api_token.record_request!
     halt 429, "Too many requests" if api_token.throttled?
   end
